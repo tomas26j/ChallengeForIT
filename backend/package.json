@@ -1,0 +1,20 @@
+{
+  "name": "challenge-fotit-backend",
+  "version": "1.0.0",
+  "description": "API sencilla desarrollada con Express para prueba tecnica.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "API",
+    "express",
+    "NextJS",
+    "REST"
+  ],
+  "author": "Tomas Riera",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
