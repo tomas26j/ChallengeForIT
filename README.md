@@ -19,7 +19,7 @@ npm install
 
 3. Inicia el servidor:
 ```bash
-npm start
+node index.js
 ```
 
 El servidor se ejecutará en `http://localhost:3000`
