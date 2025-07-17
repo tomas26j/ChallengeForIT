@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, Save, X, CheckCircle, Moon, Sun } from 'lucide-react';
 
 // Configuración de la API (simula variables de entorno)
-const API_BASE_URL = 'http://localhost:3000/api';
+const API_BASE_URL = 'http://localhost:3005/api';
 
 // Hook personalizado para manejar las llamadas a la API
 const useTaskAPI = () => {
@@ -350,7 +350,7 @@ const TaskManager = () => {
 
         {/* Footer */}
         <div className="text-center mt-8 text-sm text-slate-500 dark:text-slate-400">
-          <p>Proyecto de Práctica Profesional - React + Express</p>
+          <p>Proyecto de Práctica Profesional - TypeScript + React + Express</p>
         </div>
       </div>
     </div>
