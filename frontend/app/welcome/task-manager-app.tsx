@@ -1,72 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, Save, X, CheckCircle, Moon, Sun } from 'lucide-react';
 
-// Configuración de la API (simula variables de entorno)
-const API_BASE_URL = 'http://localhost:3005/api';
-
-// Hook personalizado para manejar las llamadas a la API
-const useTaskAPI = () => {
-  const fetchTasks = async (): Promise<any[]> => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/tasks`);
-      if (!response.ok) throw new Error('Error fetching tasks');
-      return await response.json();
-    } catch (error) {
-      console.error('Error:', error);
-      throw error;
-    }
-  };
-
-  const createTask = async (taskText: string): Promise<any> => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/tasks`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ task: taskText }),
-      });
-      if (!response.ok) throw new Error('Error creating task');
-      return await response.json();
-    } catch (error) {
-      console.error('Error:', error);
-      throw error;
-    }
-  };
-
-  const updateTask = async (id: number, taskText: string): Promise<any> => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/tasks/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ task: taskText }),
-      });
-      if (!response.ok) throw new Error('Error updating task');
-      return await response.json();
-    } catch (error) {
-      console.error('Error:', error);
-      throw error;
-    }
-  };
-
-  const deleteTask = async (id: number): Promise<any> => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/tasks/${id}`, {
-        method: 'DELETE',
-      });
-      if (!response.ok) throw new Error('Error deleting task');
-      return await response.json();
-    } catch (error) {
-      console.error('Error:', error);
-      throw error;
-    }
-  };
-
-  return { fetchTasks, createTask, updateTask, deleteTask };
-};
-
 // Cambiar la estructura de las tareas a objetos
 interface Task {
   id: number;
@@ -329,7 +263,6 @@ const TaskManager = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState<'all' | 'completed' | 'pending'>('all');
-  const api = useTaskAPI();
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
@@ -370,21 +303,6 @@ const TaskManager = () => {
     }
   }, [toast]);
 
-  // Eliminar cualquier llamada a api.fetchTasks, api.createTask, api.updateTask, api.deleteTask y loadTasks, ya que ahora todo es local
-  // const loadTasks = async () => {
-  //   try {
-  //     setLoading(true);
-  //     setError(null);
-  //     const fetchedTasks = await api.fetchTasks();
-  //     setTasks(fetchedTasks);
-  //   } catch (err) {
-  //     setError('Error al cargar las tareas. Asegúrate de que el servidor esté ejecutándose.');
-  //     console.error('Error loading tasks:', err);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
   const handleCreateTask = async (taskText: string) => {
     try {
       const now = new Date().toISOString();
@@ -395,8 +313,6 @@ const TaskManager = () => {
         updatedAt: now,
         completed: false
       };
-      // Si usas API, puedes enviar newTask, si no, solo agregar a tasks
-      // await api.createTask(taskText); // Si usas backend
       setTasks([...tasks, newTask]);
       setToast({ message: 'Tarea creada exitosamente', type: 'success' });
     } catch (err) {
